@@ -14,8 +14,8 @@ class BooksTest(unittest.TestCase):
             self.assertTrue(os.path.isfile(file_path))
 
     def test_row_from_file(self):
-        for (file_path, nb_lines, delimiter) in zip(get_input_files(),
-                                                    [4, 3, 2], ["|", "/", ","]):
+        parse_info = zip(get_input_files(), [4, 3, 2], ["|", "/", ","])
+        for (file_path, nb_lines, delimiter) in parse_info:
             self.assertEquals(len(list(rows_from_file(file_path, delimiter))),
                               nb_lines)
 

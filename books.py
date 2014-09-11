@@ -26,7 +26,11 @@ class Book(namedtuple("Book", ["first_name", "last_name", "title",
 
 
 def get_input_files():
-    """Returns the list of absolute path of the input files"""
+    """Returns the list of absolute path of the input files.
+
+    Note: input files are expected to be in a subdirectory named 'data' and
+          their names to be as provided.
+    """
     return [os.path.join(os.path.abspath(os.path.dirname(__file__)), "data",
                          file_name) for file_name in ["pipe", "slash", "csv"]]
 
@@ -37,6 +41,10 @@ def rows_from_file(file_path, delimiter):
     A row is an array of fields representing a book, each field have been
     stripped of whitespaces.
 
+    Note: the parsing is handled by the csv package and no exception handling
+          is done at this level as the exception raise by the package would be
+          as explicit as any error message that could be written.
+
     Args:
         file_path -- absolute path to a file
         delimiter -- the delimiter used in the file to separate book fields
@@ -46,11 +54,14 @@ def rows_from_file(file_path, delimiter):
             yield [field.strip() for field in row]
 
 
-# We define a series of lambda functions to convert a row from a specific
+# We define a series of functions to convert a row from a specific
 # input_file into a book. We use the '_make' classmethod of the
 # namedtuple to create an instance of book from an iterable.
+# For simplicity the functions do not do any input validation
+# e.g. number of fields parsed from the file, correct format of the
+# fields, etc ...
 
-# Pipe file just need to create the book instance
+# Pipe file just need to create the book instance.
 pipe_to_book = lambda b: Book._make(b)
 
 
