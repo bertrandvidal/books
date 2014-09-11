@@ -2,7 +2,7 @@ import os
 import unittest
 
 from books import (get_input_files, rows_from_file, pipe_to_book, slash_to_book,
-    csv_to_book, get_books_from_files)
+    csv_to_book, get_books_from_files, Book)
 
 
 class BooksTest(unittest.TestCase):
@@ -43,6 +43,10 @@ class BooksTest(unittest.TestCase):
                          [pipe_to_book, slash_to_book, csv_to_book])
         self.assertEquals(len(list(get_books_from_files(parse_info))), 9)
 
+    def test_book_concat_fields(self):
+        book = pipe_to_book(["Kent", "Beck", "Test-Driven Development", "2002"])
+        self.assertEquals(book.concat_fields(),
+                          "KentBeckTest-Driven Development2002")
 
 if __name__ == "__main__":
     unittest.main()

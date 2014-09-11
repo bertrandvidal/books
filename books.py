@@ -11,6 +11,12 @@ class Book(namedtuple("Book", ["first_name", "last_name", "title",
                                "publication_date"])):
     """Represent a book with its most important fields."""
 
+    __slots__ = ()
+
+    def concat_fields(self):
+        """Returns a string make from the concatenation of all fields."""
+        return "".join(getattr(self, field) for field in self._fields)
+
 
 def get_input_files():
     """Returns the list of absolute path of the input files"""
