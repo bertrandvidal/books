@@ -3,7 +3,8 @@ import random
 import unittest
 
 from books import (get_input_files, rows_from_file, pipe_to_book, slash_to_book,
-    csv_to_book, get_books_from_files, Book, filter_books, sort_books)
+                   csv_to_book, get_books_from_files, Book, filter_books,
+                   sort_books, process_books)
 
 
 class BooksTest(unittest.TestCase):
@@ -83,6 +84,25 @@ class BooksTest(unittest.TestCase):
                                                           kent_book_2,
                                                           kent_book_1,
                                                           slash_book])
+
+    def test_process_books(self):
+        converters = [pipe_to_book, slash_to_book, csv_to_book]
+        file_parse_info = zip(get_input_files(), ["|", "/", ","], converters)
+        books = get_books_from_files(file_parse_info)
+        self.assertEquals(len(process_books(books, "", False, False)), 9)
+        books = get_books_from_files(file_parse_info)
+        self.assertEquals(process_books(books, None, False, False)[0],
+                          Book("Kent", "Beck", "Implementation Patterns",
+                               "2007"))
+        books = get_books_from_files(file_parse_info)
+        self.assertEquals(process_books(books, None, False, True)[-1],
+                          Book("Kent", "Beck", "Implementation Patterns",
+                               "2007"))
+        books = get_books_from_files(file_parse_info)
+        self.assertEquals(process_books(books, None, True, False)[0],
+                          Book("Fred", "Brooks", "The Mythical Man-Month",
+                               "1975"))
+
 
 
 if __name__ == "__main__":
