@@ -7,9 +7,9 @@ import csv
 import os
 
 
-# Define the data structure we'll use to represent a book and its fields
-book = namedtuple("Book", ["first_name", "last_name", "title",
-                           "publication_date"])
+class Book(namedtuple("Book", ["first_name", "last_name", "title",
+                               "publication_date"])):
+    """Represent a book with its most important fields."""
 
 
 def get_input_files():
@@ -39,7 +39,7 @@ def rows_from_file(file_path, delimiter):
 
 
 # Pipe file just need to create the book instance
-pipe_to_book = lambda b: book._make(b)
+pipe_to_book = lambda b: Book._make(b)
 
 
 # Slash file requires to rotate the fields to create a book
@@ -51,11 +51,11 @@ def slash_to_book(book_fields):
     """
     slash_book = deque(book_fields)
     slash_book.rotate(-1)
-    return book._make(slash_book)
+    return Book._make(slash_book)
 
 
 # Csv file needs a complete reorder of the fields
-csv_to_book = lambda b: book._make([b[2], b[1], b[0], b[3]])
+csv_to_book = lambda b: Book._make([b[2], b[1], b[0], b[3]])
 
 
 def get_books_from_files(parse_info):
