@@ -3,6 +3,7 @@ books
 
 Write a program that reads in records from various input files and then outputs the list with command line options to sort or filter them.
 
+
 Instructions
 ============
 
@@ -53,3 +54,18 @@ Martin, Robert, Clean Code, 2008
 McConnell, Steve, Code Complete, 1993
 Shore, James, The Art of Agile Development, 2008
 
+
+Get the code and test it
+========================
+
+To retrieve the code:
+
+```shell
+git clone https://github.com/bertrandvidal/books.git
+```
+
+To run the tests:
+
+```shell
+python books_test.py
+```
