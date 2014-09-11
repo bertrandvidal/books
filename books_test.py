@@ -2,7 +2,7 @@ import os
 import unittest
 
 from books import (get_input_files, rows_from_file, pipe_to_book, slash_to_book,
-    csv_to_book, get_books_from_files, Book)
+    csv_to_book, get_books_from_files, Book, filter_books)
 
 
 class BooksTest(unittest.TestCase):
@@ -47,6 +47,16 @@ class BooksTest(unittest.TestCase):
         book = pipe_to_book(["Kent", "Beck", "Test-Driven Development", "2002"])
         self.assertEquals(book.concat_fields(),
                           "KentBeckTest-Driven Development2002")
+
+    def test_filter_books(self):
+        slash_book = slash_to_book(["1993", "Steve", "McConnell",
+                                    "Code Complete"])
+        csv_book = csv_to_book(["Clean Code", "Martin", "Robert", "2008"])
+        self.assertEquals(filter_books([slash_book, csv_book], "20"),
+                          [csv_book])
+        self.assertEquals(filter_books([slash_book, csv_book], "ode"),
+                          [slash_book, csv_book])
+
 
 if __name__ == "__main__":
     unittest.main()

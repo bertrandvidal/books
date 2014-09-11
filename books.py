@@ -75,3 +75,17 @@ def get_books_from_files(parse_info):
         for row in rows_from_file(file_path, delimiter):
             yield book_converter(row)
 
+
+def filter_books(books, search_term):
+    """Returns a subset of books, looks for the argument as a substring of any
+    of the fields
+
+    Note:
+        Search is case sensitive
+
+    Arg:
+        books -- an iterable of book instances
+        search_term -- the string used to filter book on their fields
+    """
+    return filter(lambda book: search_term in book.concat_fields(), books)
+
