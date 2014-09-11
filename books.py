@@ -1,4 +1,4 @@
-""" A simple programhat reads in records from various input files and then
+""" A simple program that reads in records from various input files and then
 outputs the list with command line options to sort or filter them.
 """
 
@@ -16,7 +16,7 @@ class Book(namedtuple("Book", ["first_name", "last_name", "title",
     __slots__ = ()
 
     def concat_fields(self):
-        """Returns a string make from the concatenation of all fields."""
+        """Returns a string made from the concatenation of all fields."""
         return "".join(getattr(self, field) for field in self._fields)
 
     def __repr__(self):
@@ -49,7 +49,6 @@ def rows_from_file(file_path, delimiter):
 # We define a series of lambda functions to convert a row from a specific
 # input_file into a book. We use the '_make' classmethod of the
 # namedtuple to create an instance of book from an iterable.
-
 
 # Pipe file just need to create the book instance
 pipe_to_book = lambda b: Book._make(b)
@@ -100,12 +99,12 @@ def filter_books(books, search_term):
 
 
 def sort_books(books, sort_by_publication_date=False, reverse_sort=False):
-    """Return the given list of Books sorted.
+    """Returns the given list of Books sorted.
 
     Arg:
-        books -- and iterable of book instances
-        sort_by_publication_date -- define if the year you should be used to
-                                    sort the Books in ascending order
+        books -- an iterable of book instances
+        sort_by_publication_date -- define if the year should be used to sort
+                                    the Books in ascending order
         reverse_sort -- define if the sorting should be reversed
     """
     cmp_key = str
