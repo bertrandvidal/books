@@ -15,10 +15,13 @@ def get_input_files():
 def rows_from_file(file_path, delimiter):
     """Yields the row in a file after parsing using the given delimiter.
 
+    A row is an array of fields representing a book, each field have been
+    stripped of whitespaces.
+
     Args:
         file_path -- absolute path to a file
         delimiter -- the delimiter used in the file to separate book fields
     """
     with open(file_path, "r") as input_file:
         for row in csv.reader(input_file, delimiter=delimiter):
-            yield row
+            yield [field.strip() for field in row]
