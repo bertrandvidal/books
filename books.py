@@ -2,8 +2,14 @@
 outputs the list with command line options to sort or filter them.
 """
 
+from collections import namedtuple
 import csv
 import os
+
+
+# Define the data structure we'll use to represent a book and its fields
+book = namedtuple("Book", ["first_name", "last_name", "title",
+                           "publication_date"])
 
 
 def get_input_files():
@@ -25,3 +31,5 @@ def rows_from_file(file_path, delimiter):
     with open(file_path, "r") as input_file:
         for row in csv.reader(input_file, delimiter=delimiter):
             yield [field.strip() for field in row]
+
+
