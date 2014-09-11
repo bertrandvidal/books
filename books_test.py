@@ -19,25 +19,25 @@ class BooksTest(unittest.TestCase):
             self.assertEquals(len(list(rows_from_file(file_path, delimiter))),
                               nb_lines)
 
-    def _assert_book_convertion(self, book, fields):
+    def _assert_book_conversion(self, book, fields):
         self.assertEquals(book.first_name, fields[0])
         self.assertEquals(book.last_name, fields[1])
         self.assertEquals(book.title, fields[2])
         self.assertEquals(book.publication_date, fields[3])
 
-    def test_pipe_convertion(self):
+    def test_pipe_conversion(self):
         fields = ["Kent", "Beck", "Test-Driven Development", "2002"]
-        self._assert_book_convertion(pipe_to_book(fields), fields)
+        self._assert_book_conversion(pipe_to_book(fields), fields)
 
-    def test_slash_convertion(self):
+    def test_slash_conversion(self):
         slash_book = slash_to_book(["1993", "Steve", "McConnell",
                                     "Code Complete"])
-        self._assert_book_convertion(slash_book, ["Steve", "McConnell",
+        self._assert_book_conversion(slash_book, ["Steve", "McConnell",
                                                   "Code Complete", "1993"])
 
-    def test_csv_convertion(self):
+    def test_csv_conversion(self):
         csv_book = csv_to_book(["Clean Code", "Martin", "Robert", "2008"])
-        self._assert_book_convertion(csv_book, ["Robert", "Martin",
+        self._assert_book_conversion(csv_book, ["Robert", "Martin",
                                                 "Clean Code", "2008"])
 
     def test_get_books_from_files(self):
