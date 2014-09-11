@@ -2,7 +2,7 @@ import os
 import unittest
 
 from books import (get_input_files, rows_from_file, pipe_to_book, slash_to_book,
-    csv_to_book)
+    csv_to_book, get_books_from_files)
 
 
 class BooksTest(unittest.TestCase):
@@ -37,6 +37,12 @@ class BooksTest(unittest.TestCase):
         csv_book = csv_to_book(["Clean Code", "Martin", "Robert", "2008"])
         self._assert_book_convertion(csv_book, ["Robert", "Martin",
                                                 "Clean Code", "2008"])
+
+    def test_get_books_from_files(self):
+        parse_info = zip(get_input_files(), ["|", "/", ","],
+                         [pipe_to_book, slash_to_book, csv_to_book])
+        self.assertEquals(len(list(get_books_from_files(parse_info))), 9)
+
 
 if __name__ == "__main__":
     unittest.main()

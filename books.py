@@ -57,3 +57,15 @@ def slash_to_book(book_fields):
 # Csv file needs a complete reorder of the fields
 csv_to_book = lambda b: book._make([b[2], b[1], b[0], b[3]])
 
+
+def get_books_from_files(parse_info):
+    """Yields the books parsed from the input files.
+
+    Arg:
+        parse_info -- list of 3-tuples as follow (file_path, delimiter,
+                      book_converter)
+    """
+    for (file_path, delimiter, book_converter) in parse_info:
+        for row in rows_from_file(file_path, delimiter):
+            yield book_converter(row)
+
