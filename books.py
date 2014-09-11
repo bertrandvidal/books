@@ -127,9 +127,10 @@ if __name__ == "__main__":
                         help="reverse the sort")
     # We remove 'books.py' from the command line arguments
     arguments = parser.parse_args(sys.argv[1:])
+    search_term = arguments.filter[0] if arguments.filter else None
     converters = [pipe_to_book, slash_to_book, csv_to_book]
     file_parse_info = zip(get_input_files(), ["|", "/", ","], converters)
     books = get_books_from_files(file_parse_info)
-    filtered_books = filter_books(books, arguments.filter[0])
+    filtered_books = filter_books(books, search_term)
     sorted_books = sort_books(filtered_books, arguments.year, arguments.reverse)
     print "\n".join(str(book) for book in sorted_books)
