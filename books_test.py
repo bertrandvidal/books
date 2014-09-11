@@ -59,6 +59,11 @@ class BooksTest(unittest.TestCase):
         self.assertEquals(filter_books([slash_book, csv_book], None),
                           [slash_book, csv_book])
 
+    def test_book_repr(self):
+        slash_book = slash_to_book(["2002", "Martin", "Fowler",
+                                    "Patterns of Enterprise Application Architecture"])
+        self.assertEquals(str(slash_book), "Fowler, Martin, Patterns of Enterprise Application Architecture, 2002")
+
 
 if __name__ == "__main__":
     unittest.main()

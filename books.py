@@ -17,6 +17,11 @@ class Book(namedtuple("Book", ["first_name", "last_name", "title",
         """Returns a string make from the concatenation of all fields."""
         return "".join(getattr(self, field) for field in self._fields)
 
+    def __repr__(self):
+        """Returns a printable version of a book."""
+        return ", ".join([self.last_name, self.first_name, self.title,
+                         self.publication_date])
+
 
 def get_input_files():
     """Returns the list of absolute path of the input files"""
