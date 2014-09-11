@@ -2,9 +2,11 @@
 outputs the list with command line options to sort or filter them.
 """
 
+from argparse import ArgumentParser
 from collections import namedtuple, deque
 import csv
 import os
+import sys
 
 
 class Book(namedtuple("Book", ["first_name", "last_name", "title",
@@ -111,3 +113,24 @@ def sort_books(books, sort_by_publication_date=False, reverse_sort=False):
         cmp_key = lambda b: b.publication_date
     return sorted(books, key=cmp_key, reverse=reverse_sort)
 
+
+if __name__ == "__main__":
+    parser = ArgumentParser(description=("Show a list of books, alphabetical "
+                                         "ascending by author's last name"))
+    parser.add_argument("--filter", nargs=1, help=("show a subset of books, "
+                                                   "looks for the argument as"
+                                                   " a substring of any of the"
+                                                   " fields"))
+    parser.add_argument("--year", action="store_true", default=False,
+                        help=("sort the books by year, ascending instead of "
+                              "default sort"))
+    parser.add_argument("--reverse", action="store_true", default=False,
+                        help="reverse the sort")
+    # We remove 'books.py' from the command line arguments
+    arguments = parser.parse_args(sys.argv[1:])
+    converters = [pipe_to_book, slash_to_book, csv_to_book]
+    file_parse_info = zip(get_input_files(), ["|", "/", ","], converters)
+    books = get_books_from_files(file_parse_info)
+    filtered_books = filter_books(books, arguments.filter[0])
+    sorted_books = sort_books(filtered_books, arguments.year, arguments.reverse)
+    print "\n".join(str(book) for book in sorted_books)
