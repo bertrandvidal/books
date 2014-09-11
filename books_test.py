@@ -1,8 +1,9 @@
 import os
+import random
 import unittest
 
 from books import (get_input_files, rows_from_file, pipe_to_book, slash_to_book,
-    csv_to_book, get_books_from_files, Book, filter_books)
+    csv_to_book, get_books_from_files, Book, filter_books, sort_books)
 
 
 class BooksTest(unittest.TestCase):
@@ -63,6 +64,25 @@ class BooksTest(unittest.TestCase):
         slash_book = slash_to_book(["2002", "Martin", "Fowler",
                                     "Patterns of Enterprise Application Architecture"])
         self.assertEquals(str(slash_book), "Fowler, Martin, Patterns of Enterprise Application Architecture, 2002")
+
+    def test_sort_books(self):
+        slash_book = slash_to_book(["1993", "Steve", "McConnell",
+                                    "Code Complete"])
+        csv_book = csv_to_book(["Clean Code", "Martin", "Robert", "2008"])
+        kent_book_1 = pipe_to_book(["Kent", "Beck", "Test-Driven Development",
+                                    "2002"])
+        kent_book_2 = pipe_to_book(["Kent", "Beck", "Implementation Patterns",
+                                   "2007"])
+        books = [slash_book, kent_book_1, kent_book_2, csv_book]
+        random.shuffle(books)
+        self.assertEquals(sort_books(books), [kent_book_2, kent_book_1,
+                                              csv_book, slash_book])
+        self.assertEquals(sort_books(books, True), [slash_book, kent_book_1,
+                                                    kent_book_2,csv_book])
+        self.assertEquals(sort_books(books, True, True), [csv_book,
+                                                          kent_book_2,
+                                                          kent_book_1,
+                                                          slash_book])
 
 
 if __name__ == "__main__":

@@ -96,3 +96,18 @@ def filter_books(books, search_term):
         return books
     return filter(lambda book: search_term in book.concat_fields(), books)
 
+
+def sort_books(books, sort_by_publication_date=False, reverse_sort=False):
+    """Return the given list of Books sorted.
+
+    Arg:
+        books -- and iterable of book instances
+        sort_by_publication_date -- define if the year you should be used to
+                                    sort the Books in ascending order
+        reverse_sort -- define if the sorting should be reversed
+    """
+    cmp_key = str
+    if sort_by_publication_date:
+        cmp_key = lambda b: b.publication_date
+    return sorted(books, key=cmp_key, reverse=reverse_sort)
+
