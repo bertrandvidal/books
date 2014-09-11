@@ -56,6 +56,8 @@ class BooksTest(unittest.TestCase):
                           [csv_book])
         self.assertEquals(filter_books([slash_book, csv_book], "ode"),
                           [slash_book, csv_book])
+        self.assertEquals(filter_books([slash_book, csv_book], None),
+                          [slash_book, csv_book])
 
 
 if __name__ == "__main__":

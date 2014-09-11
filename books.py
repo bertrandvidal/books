@@ -87,5 +87,7 @@ def filter_books(books, search_term):
         books -- an iterable of book instances
         search_term -- the string used to filter book on their fields
     """
+    if not search_term:
+        return books
     return filter(lambda book: search_term in book.concat_fields(), books)
 
